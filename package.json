@@ -1,6 +1,6 @@
 {
   "name": "math-parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "parse math expressions and equations",
   "main": "index.js",
   "scripts": {
