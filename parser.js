@@ -157,13 +157,15 @@ class Parser {
 
             var factor = base;
 
-            if (factor.type == 'Expression' || factor.type == 'Variable') {
-                factor = {
-                    type: 'Negation',
-                    inner: factor
-                };
-            } else if (factor.type == 'Number') {
-                factor.value = -factor.value;
+            if (sign === '-') {
+                if (factor.type == 'Expression' || factor.type == 'Variable') {
+                    factor = {
+                        type: 'Negation',
+                        expression: factor
+                    };
+                } else if (factor.type == 'Number') {
+                    factor.value = -factor.value;
+                }
             }
 
             return factor;
