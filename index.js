@@ -1,5 +1,5 @@
 require("babel-core/register");
 
-var Parser = require("./parser.js");
+var Parser = require("./lib/parser.js");
 
 module.exports = Parser;

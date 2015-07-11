@@ -1,9 +1,4 @@
-/**
- * Created by kevin on 2015-07-11.
- */
-require("babel-core/register");
-
-var Parser = require("./parser.js");
+var Parser = require("./index.js");
 
 var math = "1 + 2 * -(3 - 4)/(10*(x + y))";
 

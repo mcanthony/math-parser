@@ -1,8 +1,13 @@
 {
   "name": "math-parser",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "parse math expressions and equations",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "lib/parser.js",
+    "demo.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
