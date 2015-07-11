@@ -63,9 +63,9 @@ class Parser {
 
     term() {
         var tokens = this.tokens;
-        var children = [];
+        var factors = [];
 
-        children.push(this.factor());
+        factors.push(this.factor());
 
         var token = tokens[this.i++];
 
@@ -73,24 +73,28 @@ class Parser {
         while (token === '*' || token === '/' || token === '(' || isAlpha(token)) {
             if (token === '(') {
                 // TODO display concern
-                children.push('*');
-
                 var expr = this.expression();
                 token = tokens[this.i++];
                 if (token !== ')') {
                     throw 'expected )';
                 }
-                children.push(expr);
+                factors.push(expr);
 
             } else if (isAlpha(token)) {  // TODO: figure out why we can't let factor() handle this
-                children.push('*');
                 this.i--; // put the alpha back on so factor() can deal with it
                 // TODO: create a peek function to handle this more elegantly
-                children.push(this.factor());
+                factors.push(this.factor());
                 token = tokens[this.i++];
-            } else {
-                children.push(token);   // either a '*' or '/'
-                children.push(this.factor());
+            } else if (token === '*') {
+                factors.push(this.factor());
+                token = tokens[this.i++];
+            } else if (token === '/') {
+                var fraction = {
+                    type: 'Fraction',   // prefer this over Quotient because fractions are more common than long division
+                    numerator: factors,
+                    denominator: this.factor()
+                };
+                factors = [fraction];
                 token = tokens[this.i++];
             }
 
@@ -100,13 +104,13 @@ class Parser {
         }
         this.i--;
 
-        if (children.length === 1) {
-            return children[0];
+        if (factors.length === 1) {
+            return factors[0];
         }
 
         return {
-            type: 'Term',
-            children
+            type: 'Product',
+            factors
         };
     }
 
